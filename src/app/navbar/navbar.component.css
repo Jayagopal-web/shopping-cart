@@ -1,0 +1,56 @@
+.navbar{
+    display: grid;
+    grid-template-columns: 1fr 50px 100px;
+    gap: 10px;
+    align-items: center;
+    padding: 1rem;
+}
+.navbar{
+    background-color: #3b82f6;
+    color: #FFF;
+}
+.logo{
+    cursor: pointer;
+    grid-column: 1/ span 1;
+    font-size: 1.7rem;
+    font-weight: 700;
+    letter-spacing: .6px;
+}
+.logo a{
+    text-decoration: none;
+    color: #FFF;
+}
+.user-profile-img{
+    grid-column: 2/ span 1;
+}
+.login-btn{
+    margin-left: auto;
+    grid-column: 3/ span 1;
+}
+/* user profile */
+.user-profile, .profile{
+    margin-left: auto;
+    display: none;
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    color: black;
+    border-radius: 50%;
+    text-align: center;
+    padding: 10px;
+    font-weight: 800;
+}
+
+/* button style */
+.btn{
+    cursor: pointer;
+    padding: .8rem;
+    font-size: 1rem;
+    font-weight: 600;
+    outline: none;
+    background-color: #FFF;
+    border: 1px solid #FFF;
+    border-radius: 25px;
+    color: #000;
+    text-decoration: none;
+}
