@@ -1,6 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
+interface Product {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  stock: number;
+  brand: string;
+  category: string;
+  thumbnail: string;
+  images: string[];
+}
+
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
@@ -8,18 +22,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingPageComponent implements OnInit {
 
-  userList:any;
-  constructor(private httpClient: HttpClient) { 
-    this.userList=[];
-  }
+  categoriesList: string[] = [];
+  productList: { [key: string]: Product[] } = {};
+
+  constructor(private httpClient: HttpClient) { }
 
   ngOnInit(): void {
-    this.getUserList()
+    this.getCategoriesList();
   }
 
-  getUserList(){
-    this.httpClient.get('https://dummyjson.com/products/categories').subscribe((result:any)=>{
-      this.userList=result;
-    })
+  getCategoriesList(): void {
+    this.httpClient.get<string[]>('https://dummyjson.com/products/category-list').subscribe((categories: string[]) => {
+      this.categoriesList = categories;
+      this.getProductListsForCategories();
+    });
+  }
+
+  getProductListsForCategories(): void {
+    this.categoriesList.forEach((category: string) => {
+      this.httpClient.get<{ products: Product[] }>(`https://dummyjson.com/products/category/${category}`).subscribe((result: { products: Product[] }) => {
+        if (result.products && result.products.length > 0) {
+          this.productList[category] = result.products;
+        }
+      });
+    });
+  }
+
+  getFirstProductForCategory(category: string): Product | null {
+    return this.productList[category] ? this.productList[category][0] : null;
   }
 }
