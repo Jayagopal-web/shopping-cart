@@ -1,0 +1,53 @@
+<div class="container" *ngIf="singleResult">
+    <div class="single-product">
+        <div class="row">
+            <div class="co-6">
+                <div class="product-image">
+                    <div class="product-image-main">
+                        <img [src]="singleResult.thumbnail" alt="{{singleResult.title}}" id="product-main-image" >
+                    </div>
+                    <div class="product-image-slider">
+                        <img *ngFor="let image of singleResult.images; let i = index" 
+                             [src]="image" 
+                             [alt]="'Image ' + (i + 1)"
+                             (click)="onImageClick(image)">
+                    </div>
+                </div>
+            </div>
+            <div class="co-6">
+                <div class="product">
+                    <div class="product-title">
+                        <h2>{{singleResult.title}}</h2>
+                    </div>
+                    <div class="product-price">
+                        <h2>Price: $<span>{{singleResult.price}}</span></h2>
+                        <h2>Discount: <span>{{singleResult.discountPercentage}}</span>%</h2>
+                    </div>
+                    <div class="product-details">
+                        <h3>Description</h3>
+                        <p>{{singleResult.description}}</p>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="product-btn-group">
+                        <button class="button add-cart"><i class="bx bxs-cart"></i> Add to Cart</button>
+                    </div>
+                </div>
+                <!-- Review section -->
+                <div class="ratebox">
+                    <div class="rating-box">
+                        <h3>Customer reviews</h3>
+                        <div class="star">
+                            <i class="fa-solid fa-star" *ngFor="let star of getStars(singleResult.rating)"></i>
+                            <p>{{singleResult.rating}}</p>
+                        </div>
+                        <div class="writerev">
+                            <h3>Review this product</h3>
+                            <p>Share your thoughts with our customers</p>
+                            <button type="button">Write a product review</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
