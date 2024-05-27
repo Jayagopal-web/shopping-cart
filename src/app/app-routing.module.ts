@@ -7,11 +7,13 @@ import { SignupComponent } from './signup/signup.component';
 
 
 const routes: Routes = [
-  { path: '', component: LandingPageComponent },  // Default route
-  { path: 'listing', component: ListingComponent },
+
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: '**', redirectTo: '/login' }  // Wildcard route to handle undefined routes
+  { path: '', component: LandingPageComponent},
+  { path: 'listing/:category', component: ListingComponent}
+
 ];
 
 @NgModule({

@@ -1,1 +1,34 @@
-<p>listing works!</p>
+<div class="grid-listing-container">
+    <div class="listing" id="listing">
+        <div class="navMenu">
+            <div (click)="toggle()" [ngClass]="hamburgerClass">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+        <div [ngClass]="filterClass">
+            <div class="category" id="category">Category<br>
+                <select name="categories" id="categories">
+                    <option value="All" id="All">All</option>
+                    
+                </select> 
+            </div>
+            <div class="price">Price
+                <select name="Price" id="Price" onchange="getValue(this)">
+                    <option value="Default" id="Default">Default</option>
+                    <option value="LowToHigh">Low To High</option>
+                    <option value="HighToLow">High To Low</option>   
+                </select>
+            </div>
+        </div>
+        <div class="listing-container" id="listing-container">
+            <a [routerLink]="['/products',product.id]" routerLinkActive="router-link-active"   class="card" *ngFor="let product of products">
+                <img [src]="product.thumbnail" alt="{{ product.title }}" />
+                <p class="product-title">{{ product.title }}</p>
+                <h3 class="price-tag">${{ product.price }}</h3>
+                <p class="discount">{{ product.discountPercentage }}% off</p>
+              </a>
+        </div>
+    </div>
+</div>
