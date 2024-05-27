@@ -11,6 +11,7 @@ import { ListingComponent } from './listing/listing.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { SingleproductComponent } from './singleproduct/singleproduct.component';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { SignupComponent } from './signup/signup.component';
     ListingComponent,
     LoginComponent,
     SignupComponent,
+    SingleproductComponent,
 
   ],
   imports: [
