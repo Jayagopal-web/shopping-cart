@@ -9,13 +9,13 @@
         </div>
         <div [ngClass]="filterClass">
             <div class="category" id="category">Category<br>
-                <select name="categories" id="categories">
-                    <option value="All" id="All">All</option>
-                    
+                <select name="categoriesOption" #categoriesOption [(ngModel)]="selectedCategory" (change)="onchange($event)">
+                    <option value="All">All</option>
+                    <option *ngFor="let categories of categoriesList" [value]="categories">{{categories}}</option>
                 </select> 
             </div>
             <div class="price">Price
-                <select name="Price" id="Price" onchange="getValue(this)">
+                <select name="Price" #priceOption [(ngModel)]="priceRange" (change)="onPriceChange($event)">
                     <option value="Default" id="Default">Default</option>
                     <option value="LowToHigh">Low To High</option>
                     <option value="HighToLow">High To Low</option>   
