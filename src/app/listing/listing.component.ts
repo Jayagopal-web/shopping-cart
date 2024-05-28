@@ -3,13 +3,15 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { SharedService } from '../shared/shared.service';
 import { Subscription } from 'rxjs';
-import { AnimationEvent,trigger, transition, query, style, stagger, animate } from '@angular/animations';
+import { Product } from '../shared/constant/data.model';
+import {trigger, transition, query, style, stagger, animate } from '@angular/animations';
 
 
 @Component({
   selector: 'app-listing',
   templateUrl: './listing.component.html',
-  styleUrls: ['./listing.component.css'], animations: [
+  styleUrls: ['./listing.component.css'], 
+  animations: [
     trigger('fadeInOut', [
       transition(':enter', [
         query('.card', [
@@ -37,17 +39,17 @@ export class ListingComponent implements OnInit, OnDestroy {
 
   selectedCategory: string | null = 'All';
   priceRange: string | null = 'Default';
-  category: string | null | Event = null;
-  products: any[] = [];
+  category: string | null = null;
+  products: Product[] = [];
   categoriesList: string[] = [];
   searchValue: string = '';
-  searchProductsDetails: any[] = [];
+  searchProductsDetails: Product[] = [];
   hamburgerClass = 'hamburger';
   filterClass = 'filters';
   firstSearch: boolean = true;
-  beforeSearch: any[] = [];
+  beforeSearch: Product[] = [];
   private searchTermSubscription!: Subscription;
-  private initialLoad: boolean = true; // Flag to track initial load
+  private initialLoad: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
