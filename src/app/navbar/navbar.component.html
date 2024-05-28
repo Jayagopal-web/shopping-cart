@@ -5,11 +5,10 @@
     <div class="search-bar" *ngIf="showSearchBar">
         <span><input type="text" placeholder="Search by Product name, Brand" (input)="onSearch($event)"></span>
     </div>
-    <div class="user-profile-img profile" id="user-profile">
-        <span id="profileImg">JK</span>
+    <div [class]="userProfile" id="user-profile">
+        <span id="profileImg">{{ userName }}</span>
     </div>
     <div class="login-btn">
-        <!-- <button type="button" class="btn" id="login">Login</button> -->
-        <a class="btn" [routerLink]="['/login']" routerLinkActive="router-link-active" >Login</a>
+        <a class="btn" [routerLink]="['/login']" routerLinkActive="router-link-active" (click)="loginBtn()">{{ LoginText }}</a>
     </div>
 </div>
