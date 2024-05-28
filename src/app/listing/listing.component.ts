@@ -3,11 +3,35 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { SharedService } from '../shared/shared.service';
 import { Subscription } from 'rxjs';
+import { AnimationEvent,trigger, transition, query, style, stagger, animate } from '@angular/animations';
+
 
 @Component({
   selector: 'app-listing',
   templateUrl: './listing.component.html',
-  styleUrls: ['./listing.component.css']
+  styleUrls: ['./listing.component.css'], animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        query('.card', [
+          style({ opacity: 0, transform: 'translateY(-10px)' }),
+          stagger(50, [
+            animate('200ms ease-in', style({ opacity: 1, transform: 'translateY(0)' }))
+          ])
+        ], { optional: true }) // Ensure the animation is optional to avoid errors
+      ]),
+      // Animation start and done callbacks
+      transition('* => *', [
+        animate('100ms', style({ opacity: 0 })),
+        // Animation start callback
+        query('.card', [
+          style({ opacity: 0, transform: 'translateY(-20px)' }),
+          stagger(50, [
+            animate('300ms ease-in', style({ opacity: 1, transform: 'translateY(0)' }))
+          ])
+        ], { optional: true }), // Ensure the animation is optional to avoid errors
+      ]),
+    ])
+  ]
 })
 export class ListingComponent implements OnInit, OnDestroy {
 
@@ -73,6 +97,7 @@ export class ListingComponent implements OnInit, OnDestroy {
   search() {
     if (this.searchValue.trim() !== "") {
       this.searchProductsDetails = [];
+      this.initialLoad = false;
       const searchTerms = this.searchValue.toLowerCase().split(" ");
       this.beforeSearch.forEach(element => {
         const titleLower = element.title.toLowerCase();
@@ -95,20 +120,18 @@ export class ListingComponent implements OnInit, OnDestroy {
 
   fetchProducts(category: string | Event): void {
     this.priceRange = "Default";
+    this.products = [];
+    this.sharedService.updateSearchTerm('');
     if (category !== "All") {
       this.httpClient.get<any>(`https://dummyjson.com/products/category/${category}`).subscribe(result => {
         this.products = result.products;
         this.beforeSearch = [...this.products];
-        this.sharedService.updateSearchTerm("");
-        this.sharedService.getmessage();
       });
     } else {
       this.httpClient.get<any>('https://dummyjson.com/products?limit=0').subscribe(result => {
         this.products = result.products;
         this.selectedCategory = category;
         this.beforeSearch = [...this.products];
-        this.sharedService.updateSearchTerm("");
-        this.sharedService.getmessage();
       });
     }
   }
@@ -131,16 +154,20 @@ export class ListingComponent implements OnInit, OnDestroy {
   }
 
   sortProducts(order: 'asc' | 'desc') {
+    this.products = [];
     if (this.selectedCategory !== "All") {
       this.httpClient.get<any>(`https://dummyjson.com/products/category/${this.selectedCategory}?sortBy=price&order=${order}`).subscribe(result => {
         this.products = result.products;
         this.beforeSearch = [...this.products];
+        this.search();
       });
     } else {
       this.httpClient.get<any>(`https://dummyjson.com/products?limit=0&sortBy=price&order=${order}`).subscribe(result => {
         this.products = result.products;
         this.beforeSearch = [...this.products];
+        this.search();
       });
     }
+    this.search();
   }
 }

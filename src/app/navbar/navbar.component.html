@@ -3,7 +3,7 @@
         <span><a [routerLink]="['/']" routerLinkActive="router-link-active" >Eshop Spot</a></span>
     </div>
     <div class="search-bar" *ngIf="showSearchBar">
-        <span><input type="text" placeholder="Search by Product name, Brand" (input)="onSearch($event)"></span>
+        <span><input type="text" placeholder="Search by Product name, Brand" (input)="onSearch($event)" value="{{searchValue}}"></span>
     </div>
     <div class="user-profile-img profile" id="user-profile">
         <span id="profileImg">JK</span>
