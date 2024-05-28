@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { SharedService } from '../shared/shared.service';
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -10,6 +11,7 @@ import { SharedService } from '../shared/shared.service';
 export class NavbarComponent implements OnInit {
 
   showSearchBar: boolean = false;
+
   searchvalue:string="";
   userId:string | null = '';
   LoginText:string = 'Login';
@@ -19,7 +21,8 @@ export class NavbarComponent implements OnInit {
   userName:string ='';
   userProfile:string = 'user-profile-img profile';
 
-  constructor(private router: Router,private httpClient: HttpClient,private sharedService:SharedService) {}
+  constructor(private router: Router,private httpClient: HttpClient,private sharedService:SharedService,private cdr: ChangeDetectorRef) {}
+
 
   ngOnInit() {
     this.router.events.subscribe(event => {
@@ -28,6 +31,7 @@ export class NavbarComponent implements OnInit {
         this.showSearchBar = event.urlAfterRedirects.includes('/listing');
       }
     });
+
 
     this.userId = sessionStorage.getItem('ID');
     this.fname = sessionStorage.getItem('firstName');
@@ -46,6 +50,12 @@ export class NavbarComponent implements OnInit {
       
       this.userProfile = 'user-profile-img profile block';
     }
+
+    this.sharedService.currentSearchTerm.subscribe(term => {
+      this.searchValue = term;
+      this.cdr.detectChanges();
+    });
+
   }
   onSearch(event: any) {
     const searchTerm = event.target.value;

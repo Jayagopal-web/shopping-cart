@@ -75,6 +75,15 @@
     color: #3b82f6;
     font-size: 40px;
 }
+.card{
+    transition: opacity 0.3s ease-in-out;
+}
+.no-products-message {
+    text-align: center;
+    font-size: 2.2em;
+    color: #3b82f6;
+    margin-top: 20px;
+  }
 
 .products_card img{
     width: 100%;
