@@ -9,6 +9,10 @@ import { FooterComponent } from './footer/footer.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { ListingComponent } from './listing/listing.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
+import { SingleproductComponent } from './singleproduct/singleproduct.component';
+
 
 @NgModule({
   declarations: [
@@ -17,7 +21,11 @@ import { HttpClientModule } from '@angular/common/http';
     NavbarComponent,
     FooterComponent,
     LandingPageComponent,
-    ListingComponent
+    ListingComponent,
+    LoginComponent,
+    SignupComponent,
+    SingleproductComponent,
+
   ],
   imports: [
     BrowserModule,
