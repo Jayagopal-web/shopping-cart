@@ -17,9 +17,6 @@ export class ListingComponent implements OnInit {
   filterClass = 'filters'
   constructor(private route: ActivatedRoute, private httpClient: HttpClient) { }
 
-  hamburger = document.querySelector(".hamburger") as HTMLDivElement;
-  navMenu = document.querySelector(".filters") as HTMLDivElement;
-
   toggle(){
     if(this.hamburgerClass == 'hamburger'){
       this.hamburgerClass = 'hamburger active'; 
