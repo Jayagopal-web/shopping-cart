@@ -12,7 +12,7 @@ export class NavbarComponent implements OnInit {
 
   showSearchBar: boolean = false;
 
-  searchvalue:string="";
+  searchValue:string="";
   userId:string | null = '';
   LoginText:string = 'Login';
   formData:any;
