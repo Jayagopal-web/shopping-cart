@@ -22,7 +22,7 @@
                 </select>
             </div>
         </div>
-        <div *ngIf="products.length === 0" class="no-products-message" [@fadeInOut]>
+        <div *ngIf="!products.length" class="no-products-message">
             No products available.
         </div>
         <div class="listing-container" id="listing-container">
