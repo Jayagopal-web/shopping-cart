@@ -5,6 +5,12 @@
     <div class="search-bar" *ngIf="showSearchBar">
         <span><input type="text" placeholder="Search by Product name, Brand" (input)="onSearch($event)" value="{{searchValue}}"></span>
     </div>
+    <div class="cart-btn">
+        <button routerLink="cart" class="btn btn-primary">
+            <i class="fas fa-cart-plus"></i>
+            <div class="badge bg-danger">5</div>
+        </button>
+    </div>
     <div [class]="userProfile" id="user-profile">
         <span id="profileImg">{{ userName }}</span>
     </div>
