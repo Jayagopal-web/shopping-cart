@@ -42,7 +42,7 @@ export class SingleproductComponent implements OnInit {
     this.singleResult.thumbnail = imageUrl;
 }
 
-  getStars(rating: number): number[] {
-    return Array(Math.round(rating)).fill(0);
-  }
+  // getStars(rating: number): number[] {
+  //   return Array(Math.round(rating)).fill(0);
+  // }
 }
