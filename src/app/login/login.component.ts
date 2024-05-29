@@ -38,11 +38,12 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem("ID", userIndex.toString());
         sessionStorage.setItem("firstName", formData[userIndex].fname);
         sessionStorage.setItem("lastName", formData[userIndex].lname);
+        sessionStorage.setItem("email", formData[userIndex].email);
 
         // Ensure login is a string
         sessionStorage.setItem("login", formData[userIndex].login || '');
     }
-
+     
     // If no matching user is found, show an error message
     if (!exist) {
         alert("Incorrect login credentials");

@@ -13,8 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { SingleproductComponent } from './singleproduct/singleproduct.component';
-
-
+import { RatingsComponent } from './ratings/ratings.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +22,7 @@ import { SingleproductComponent } from './singleproduct/singleproduct.component'
     FooterComponent,
     LandingPageComponent,
     ListingComponent,
+    RatingsComponent,
     LoginComponent,
     SignupComponent,
     SingleproductComponent,
