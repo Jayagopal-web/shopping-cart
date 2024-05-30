@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkoutpage',
@@ -12,7 +13,7 @@ export class CheckoutpageComponent implements OnInit {
   checkoutForm!: FormGroup;
 
 
-  constructor(private cartService: CartService,private formBuilder: FormBuilder) { 
+  constructor(private cartService: CartService,private formBuilder: FormBuilder,private router: Router) { 
     this.checkoutForm = this.formBuilder.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -41,6 +42,12 @@ export class CheckoutpageComponent implements OnInit {
     if (this.checkoutForm.valid) {
       // Form is valid, proceed with submission
       console.log('Form submitted:', this.checkoutForm.value);
+      alert('Order placed successfully!');
+      
+      // Clear local storage
+      localStorage.clear();
+      this.router.navigate(['/cart']);
+
     } else {
       // Form is invalid, mark all fields as touched to display error messages
       this.checkoutForm.markAllAsTouched();

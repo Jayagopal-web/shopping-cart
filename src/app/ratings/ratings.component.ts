@@ -110,10 +110,12 @@ export class RatingsComponent implements OnInit {
 
 
     if(!this.selectedStars || !this.reviewDescription){
-      alert('Please leave your comment before submit');
+      alert('Please leave your comment');
+      return ;
     }
     if (this.username == 'null null' || this.username.trim() === '') {
-      alert("Please log in to leave a review.")
+      alert("Please log in to leave a review.");
+      return;
     }
     else{
       console.log(this.username);
