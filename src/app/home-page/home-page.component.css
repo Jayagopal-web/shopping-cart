@@ -194,5 +194,20 @@ body{
     color: white;
     background-color: #111;
 }
+
+.top{
+    position: fixed;
+    bottom: 100px;
+    right: 25px;
+    width: 40px;
+    height: 40px;
+    background-color: #3b82f6ba;
+    color: #FFF;
+    transition: all;
+    border: none;
+}
+.top:hover{
+    background-color: #3b82f6;
+}
 /* --------index.html----------- */
 /* ------------END----------- */
