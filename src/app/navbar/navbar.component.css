@@ -64,6 +64,12 @@
     color: #000;
     text-decoration: none;
 }
+.cart-btn button{
+    position: relative;
+}
+.cart-btn .badge.bg-danger{
+    position: absolute;
+}
 .search-bar{
     text-align: center;
 }
