@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CartService } from '../services/cart.service';
+import { CartItem } from '../shared/constant/data.model';
 
 @Component({
   selector: 'app-cart',
@@ -9,47 +11,48 @@ export class CartComponent implements OnInit {
   userId: string | null = sessionStorage.getItem('ID'); // Retrieve session ID
   cartItems: any[] = []; // Declare cartItems array
   totalPrice: number = 0; // Variable to store total price
-  cartKey :string ='';
+  cartKey: string = ''; // Key for localStorage
 
-  constructor() { 
-    // const cartKey = 'cart_' + this.userId;
-  
-    // // Retrieve the existing cart items from localStorage
-    // let cartItems: any[] = JSON.parse(localStorage.getItem(cartKey) || '[]');
-    // console.log(cartItems);
-    // console.log(cartItems.length)
-  }
+  constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
-    this.cartKey = 'cart_' + this.userId;
-  
-    // Retrieve the existing cart items from localStorage
-    // this.cartItems = JSON.parse(localStorage.getItem(cartKey) || '[]');
-    this.getCartItems();
-    console.log(this.cartItems);
-    console.log(this.cartItems.length)
-    this.calculateTotalPrice();
+    if (this.userId) {
+      this.cartKey = 'cart_' + this.userId;
+      this.getCartItems();
+    } else {
+      console.error('No user ID found in session storage');
+    }
   }
-cart_item(){
-  return this.cartItems;
-}
-getCartItems(): void {
-  this.cartKey = 'cart_' + this.userId;; // Local storage key for cart items
-  // Retrieve cart items from local storage
-  this.cartItems = JSON.parse(localStorage.getItem(this.cartKey) || '[]');
-  // Calculate total price
-  this.calculateTotalPrice();
-}
-calculateTotalPrice(): void {
-  this.totalPrice = this.cartItems.reduce((total, item) => total + (item.price ? +item.price : 0) * (item.quantity ? +item.quantity : 0), 0);
-}
-removeItem(index: number): void {
-  // Remove item from cartItems array
-  this.cartItems.splice(index, 1);
-  console.log(this.cartItems)
-  // Update local storage
-  localStorage.setItem(this.cartKey, JSON.stringify(this.cartItems));
-  // Recalculate total price
-  this.calculateTotalPrice();
-}
+
+  getCartItems(): void {
+    const storedItems = localStorage.getItem(this.cartKey);
+    if (storedItems) {
+      this.cartItems = JSON.parse(storedItems);
+    }
+    this.calculateTotalPrice();
+    this.cartService.updateCartItems(this.cartItems);
+    
+  }
+
+  calculateTotalPrice(): void {
+    this.totalPrice = this.cartItems.reduce(
+      (total, item) => total + (item.price ? +item.price : 0) * (item.quantity ? +item.quantity : 0),
+      0
+    );
+    this.cartService.updateTotalPrice(this.totalPrice);
+  }
+
+  removeItem(index: number): void {
+    this.cartItems.splice(index, 1);
+    localStorage.setItem(this.cartKey, JSON.stringify(this.cartItems));
+    this.calculateTotalPrice();
+    this.cartService.updateCartItems(this.cartItems);
+  }
+  emptyCart(): void {
+    this.cartItems = []; // Clear cart items
+    localStorage.removeItem(this.cartKey); // Remove cart from local storage
+    this.totalPrice = 0; // Reset total price
+    this.cartService.updateTotalPrice(this.totalPrice); // Update total price in service
+    this.cartService.updateCartItems(this.cartItems); // Update cart items in service
+  }
 }

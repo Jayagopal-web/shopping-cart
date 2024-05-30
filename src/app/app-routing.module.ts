@@ -7,6 +7,7 @@ import { SignupComponent } from './signup/signup.component';
 import { SingleproductComponent } from './singleproduct/singleproduct.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CartComponent } from './cart/cart.component';
+import { CheckoutpageComponent } from './checkoutpage/checkoutpage.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'cart', component: CartComponent },
+  { path: 'checkoutpage', component: CheckoutpageComponent },
   // { path: '**', redirectTo: '/login' },  
   { path: 'singleproduct/:singleproductId',component: SingleproductComponent}
 

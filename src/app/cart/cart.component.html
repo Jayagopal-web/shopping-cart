@@ -28,9 +28,9 @@
                         </tr>
                         <tr>
                             <td colspan="2"></td> 
-                            <td><button  class="btn btn-danger">Empty Cart</button></td>
-                            <td><button routerLink="listing" class="btn btn-primary">Shop more</button></td>
-                            <td><button class="btn btn-success">Checkout</button></td>
+                            <td><button (click)="emptyCart()"  class="btn btn-danger">Empty Cart</button></td>
+                            <td><button [routerLink]="['']" class="btn btn-primary">Shop more</button></td>
+                            <td><button [routerLink]="['/checkoutpage']"  class="btn btn-success">Checkout</button></td>
                             <td><strong>Grand Total  :{{totalPrice}}</strong></td>
                         </tr>
                     </tbody>
@@ -58,7 +58,7 @@
                 <img src="" alt="">
                 <h4>Your cart is empty</h4>
                 <h6>Add items to it now</h6>
-                <button routerLink="/products" class="btn btn-primary">Shop Now</button>
+                <button [routerLink]="['']" class="btn btn-primary">Shop Now</button>
             </div>
         </div>
     </ng-container>

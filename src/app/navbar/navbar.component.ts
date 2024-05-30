@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { SharedService } from '../shared/shared.service';
+import { CartService } from '../services/cart.service';
 import { ChangeDetectorRef } from '@angular/core';
+
+import { CartItem } from '../shared/constant/data.model';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -17,14 +20,18 @@ export class NavbarComponent implements OnInit {
   LoginText:string = 'Login';
   formData:any;
   fname:string | null ='';
-  lname:string | null ='';
+  lname:string | null =''; 
   userName:string ='';
   userProfile:string = 'user-profile-img profile';
+  cartItemCount: number = 0;
 
-  constructor(private router: Router,private httpClient: HttpClient,private sharedService:SharedService,private cdr: ChangeDetectorRef) {}
+  constructor(private router: Router,private httpClient: HttpClient,private sharedService:SharedService,private cdr: ChangeDetectorRef,private cartService: CartService) {}
 
 
   ngOnInit() {
+    this.cartService.currentCartItems.subscribe(cartItems => {
+      this.cartItemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+    });
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Check if the current URL is the listing page

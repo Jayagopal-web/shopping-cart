@@ -15,6 +15,10 @@ import { SignupComponent } from './signup/signup.component';
 import { SingleproductComponent } from './singleproduct/singleproduct.component';
 import { RatingsComponent } from './ratings/ratings.component';
 import { CartComponent } from './cart/cart.component';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CheckoutpageComponent } from './checkoutpage/checkoutpage.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,13 +32,16 @@ import { CartComponent } from './cart/cart.component';
     SignupComponent,
     SingleproductComponent,
     CartComponent,
+    CheckoutpageComponent,
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    CommonModule,
+    ReactiveFormsModule // Add ReactiveFormsModule to imports
   ],
   providers: [],
   bootstrap: [AppComponent]

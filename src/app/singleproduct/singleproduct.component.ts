@@ -79,6 +79,7 @@ console.log(cartItems);
   localStorage.setItem(cartKey, JSON.stringify(cartItems));
 
   alert('Product added to cart successfully!');
+  window.location.reload();
 }
 
 
