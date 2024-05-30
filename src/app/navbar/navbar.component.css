@@ -27,6 +27,10 @@
     text-decoration: none;
     color: #FFF;
 }
+.logo :hover{
+    color: black;
+
+}
 .user-profile-img{
     grid-column: 2/ span 1;
 }
