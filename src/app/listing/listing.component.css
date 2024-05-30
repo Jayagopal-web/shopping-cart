@@ -2,6 +2,7 @@
     background-color: #e5e7eb;
 }
 .listing{
+    height: 100%;
     display: grid;
     grid-template-columns: 1fr 4fr;
     gap: 20px;

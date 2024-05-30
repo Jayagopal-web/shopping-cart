@@ -4,6 +4,7 @@
     box-sizing: border-box;
 }
 .card{
+    height: 100%;
     font-family: "Roboto", sans-serif;
     cursor: pointer;
     padding: 1rem 1rem;
