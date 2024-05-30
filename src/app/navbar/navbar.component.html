@@ -11,7 +11,7 @@
     <div class="cart-btn" [ngClass]="{'listing-page': showSearchBar}">
         <button routerLink="cart" class="btn btn-primary">
             <i class="fas fa-cart-plus"></i>
-            <div class="badge bg-danger">5</div>
+            <div *ngIf="cartItemCount > 0" class="badge bg-danger">{{ cartItemCount }}</div>
         </button>
     </div>
     <div class="login-btn" [ngClass]="{'listing-page': showSearchBar}">

@@ -1,37 +1,68 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from './auth.service';
+import { BehaviorSubject } from 'rxjs';
+import { CartItem } from '../shared/constant/data.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  constructor(private authService: AuthService) {}
+  private cartItems = new BehaviorSubject<CartItem[]>([]);
+  currentCartItems = this.cartItems.asObservable();
+  private totalPriceSubject = new BehaviorSubject<number>(0);
+  totalPrice$ = this.totalPriceSubject.asObservable();
 
-  // Get the unique cart key for the current session
-  private getCartKey(): string | null {
-    const sessionId = this.authService.getSessionId();
-    return sessionId ? `cart_${sessionId}` : null;
+
+  constructor() {
+    this.loadInitialCartItems();
   }
 
-  // Get cart items for the current session
-  getCartItems(): any[] {
-    const cartKey = this.getCartKey();
-    if (cartKey) {
-      const cart = localStorage.getItem(cartKey);
-      return cart ? JSON.parse(cart) : [];
+  private loadInitialCartItems() {
+    const userId = sessionStorage.getItem('ID');
+    if (userId) {
+      const cartKey = 'cart_' + userId;
+      const storedItems = localStorage.getItem(cartKey);
+      if (storedItems) {
+        this.cartItems.next(JSON.parse(storedItems));
+      }
     }
-    return [];
   }
 
-  // Add an item to the cart for the current session
-  addToCart(product: any): void {
-    const cartKey = this.getCartKey();
-    if (cartKey) {
-      const cartItems = this.getCartItems();
-      cartItems.push(product);
-      localStorage.setItem(cartKey, JSON.stringify(cartItems));
+  updateCartItems(items: CartItem[]) {
+    this.cartItems.next(items);
+    this.saveCartItems(items);
+    this.calculateTotalPrice(); // Update total price when cart items change
+  }
+
+  addToCart(newItem: CartItem) {
+    const currentItems = this.cartItems.getValue();
+    const existingItemIndex = currentItems.findIndex(item => item.productId === newItem.productId);
+
+    if (existingItemIndex > -1) {
+      currentItems[existingItemIndex].quantity += newItem.quantity;
     } else {
-      console.error('User is not logged in');
+      currentItems.push(newItem);
+    }
+
+    this.updateCartItems(currentItems);
+  }
+  updateTotalPrice(totalPrice: number) {
+    this.totalPriceSubject.next(totalPrice);
+  }
+
+  private saveCartItems(items: CartItem[]) {
+    const userId = sessionStorage.getItem('ID');
+    if (userId) {
+      const cartKey = 'cart_' + userId;
+      localStorage.setItem(cartKey, JSON.stringify(items));
     }
   }
+  getTotalPrice(): number {
+    return this.totalPriceSubject.value;
+  }
+  calculateTotalPrice() {
+    const items = this.cartItems.getValue();
+    const totalPrice = items.reduce((total, item) => total + (item.price ? +item.price : 0) * (item.quantity ? +item.quantity : 0), 0);
+    this.totalPriceSubject.next(totalPrice);
+  }
+
 }
