@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-
+import { CartService } from '../services/cart.service';
 
 
 @Component({
@@ -19,8 +19,11 @@ export class SingleproductComponent implements OnInit {
   singleResult: any = null;
   mainImage: string = '';
   userId: string | null = sessionStorage.getItem('ID'); // Retrieve session ID
+  
+  cartItemCount: any;
+  cartItems: any = [];
 
-  constructor(private route: ActivatedRoute, private httpClient: HttpClient) { }
+  constructor(private route: ActivatedRoute, private httpClient: HttpClient,private cartService: CartService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -57,17 +60,17 @@ addToCart(): void {
   const cartKey = 'cart_' + this.userId;
   
   // Retrieve the existing cart items from localStorage
-  let cartItems: any[] = JSON.parse(localStorage.getItem(cartKey) || '[]');
-console.log(cartItems);
+   this.cartItems = JSON.parse(localStorage.getItem(cartKey) || '[]');
+console.log(this.cartItems);
   // Check if the product already exists in the cart
-  const existingItemIndex = cartItems.findIndex(item => item.productId === this.singleproductId);
+  const existingItemIndex = this.cartItems.findIndex((item:any) => item.productId === this.singleproductId);
   
   if (existingItemIndex !== -1) {
     // If the product already exists, increment the quantity
-    cartItems[existingItemIndex].quantity++;
+    this.cartItems[existingItemIndex].quantity++;
   } else {
     // If the product doesn't exist, add it to the cart with quantity 1
-    cartItems.push({
+    this.cartItems.push({
        productId: this.singleproductId,
        name: this.singleResult.title,
        thumbnail: this.singleResult.thumbnail,
@@ -76,13 +79,14 @@ console.log(cartItems);
   }
 
   // Store the updated cart items back in localStorage
-  localStorage.setItem(cartKey, JSON.stringify(cartItems));
+  localStorage.setItem(cartKey, JSON.stringify(this.cartItems));
 
   alert('Product added to cart successfully!');
-  window.location.reload();
+  // window.location.reload();\
+ 
+this.cartService.updateCartItems(this.cartItems);
 }
-
-
+ 
   // getStars(rating: number): number[] {
   //   return Array(Math.round(rating)).fill(0);
   // }

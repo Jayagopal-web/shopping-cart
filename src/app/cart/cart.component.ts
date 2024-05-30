@@ -55,4 +55,20 @@ export class CartComponent implements OnInit {
     this.cartService.updateTotalPrice(this.totalPrice); // Update total price in service
     this.cartService.updateCartItems(this.cartItems); // Update cart items in service
   }
+  decreaseQuantity(item: CartItem): void {
+    if (item.quantity > 1) {
+      item.quantity--;
+      this.updateCart();
+    }
+  }
+
+  increaseQuantity(item: CartItem): void {
+    item.quantity++;
+    this.updateCart();
+  }
+  updateCart(): void {
+    localStorage.setItem(this.cartKey, JSON.stringify(this.cartItems));
+    this.calculateTotalPrice();
+    this.cartService.updateCartItems(this.cartItems);
+  }
 }

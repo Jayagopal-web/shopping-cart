@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CheckoutpageComponent } from './checkoutpage/checkoutpage.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +34,7 @@ import { CheckoutpageComponent } from './checkoutpage/checkoutpage.component';
     SingleproductComponent,
     CartComponent,
     CheckoutpageComponent,
+   
 
   ],
   imports: [

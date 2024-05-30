@@ -30,3 +30,9 @@ text-align: center;
     color:#fff;
     background-color: #3b82f6;
 }
+button.btn.btn-primary.qt-btn {
+    font-size: 10px;
+    margin: 3px;
+}
+.cart-product {
+    overflow: scroll;}
