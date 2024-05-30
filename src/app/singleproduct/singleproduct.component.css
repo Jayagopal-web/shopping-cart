@@ -168,3 +168,8 @@
 .writerev button:hover {
     background: #218838;
 }
+@media (max-width:475px) {
+    .product-image-main img {
+        width: 250px;
+    }
+}

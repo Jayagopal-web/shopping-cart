@@ -16,8 +16,27 @@
     font-family: "Roboto", sans-serif;
     scroll-behavior: smooth;
 }
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+}
+
+app-footer {
+    /* Ensure the footer has some height */
+    height: 50px; /* Adjust as needed */
+}
+
 body{
-    height: 100vh;
     background-color: #e5e7eb;
 }
 

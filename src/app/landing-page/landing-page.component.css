@@ -48,9 +48,23 @@
     .categories-container{
         grid-template-columns: repeat(2, 1fr);
     }
+    .welcome-text{
+        font-size: 2.8rem;
+    }
+}
+@media (max-width:600px) {
+    .welcome-text{
+        font-size: 2rem;
+    }
 }
 @media (max-width:475px) {
     .categories-container{
         grid-template-columns: repeat(1, 1fr);
+    }
+    .welcome-text{
+        font-size: 1.4rem;
+    }
+    .tagline{
+        font-size: 1rem;
     }
 }

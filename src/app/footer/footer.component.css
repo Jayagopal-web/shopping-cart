@@ -4,6 +4,9 @@
     color: white;
     background-color: #111;
 }
+.footer p{
+    margin: 0;
+}
 .footer a {
     color: #FFF;
     text-align: center;
