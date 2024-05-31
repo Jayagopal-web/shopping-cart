@@ -1,7 +1,9 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { CartService } from '../services/cart.service';import { Location } from '@angular/common';
+import { CartService } from '../services/cart.service';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-singleproduct',
@@ -27,7 +29,7 @@ export class SingleproductComponent implements OnInit {
     private route: ActivatedRoute,
     private httpClient: HttpClient,private cartService: CartService,
     private location: Location,
-    private renderer: Renderer2
+    
   ) { }
 
   ngOnInit(): void {

@@ -63,6 +63,7 @@ button {
 /* Style for button hover */
 button:hover {
     background-color: #3B82F6;
+    color: white;
 }
 
 p {
