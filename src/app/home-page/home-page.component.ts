@@ -1,5 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {  NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home-page',
@@ -11,9 +13,14 @@ export class HomePageComponent implements OnInit {
   isMenuScrolled: boolean = false;
   constructor(public router: Router) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      window.scrollTo(0, 0);
+    });
   }
-
+  
   @HostListener('window:scroll', ['$event'])
   scrollCheck(){
     if(window.pageYOffset > 100)
