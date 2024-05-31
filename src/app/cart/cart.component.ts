@@ -36,9 +36,10 @@ export class CartComponent implements OnInit {
 
   calculateTotalPrice(): void {
     this.totalPrice = this.cartItems.reduce(
-      (total, item) => total + (item.price ? +item.price : 0) * (item.quantity ? +item.quantity : 0),
+      (total, item) => total + (item.price ? +item.price : 0) * (item.quantity ? +item.quantity : 0), 
       0
     );
+    this.totalPrice = parseFloat(this.totalPrice.toFixed(2));
     this.cartService.updateTotalPrice(this.totalPrice);
   }
 
