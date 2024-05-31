@@ -1,7 +1,7 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Location } from '@angular/common';
+import { CartService } from '../services/cart.service';import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-singleproduct',
@@ -18,11 +18,14 @@ export class SingleproductComponent implements OnInit {
   singleResult: any = null;
   mainImage: string = '';
   userId: string | null = sessionStorage.getItem('ID'); // Retrieve session ID
-  isAdditionalInfoVisible: boolean = false; // To track visibility
+    isAdditionalInfoVisible: boolean = false; // To track visibility
+
+  cartItemCount: any;
+  cartItems: any = [];
 
   constructor(
     private route: ActivatedRoute,
-    private httpClient: HttpClient,
+    private httpClient: HttpClient,private cartService: CartService,
     private location: Location,
     private renderer: Renderer2
   ) { }
@@ -62,18 +65,18 @@ export class SingleproductComponent implements OnInit {
     const cartKey = 'cart_' + this.userId;
 
     // Retrieve the existing cart items from localStorage
-    let cartItems: any[] = JSON.parse(localStorage.getItem(cartKey) || '[]');
-    console.log(cartItems);
+     this.cartItems = JSON.parse(localStorage.getItem(cartKey) || '[]');
+    console.log(this.cartItems);
 
     // Check if the product already exists in the cart
-    const existingItemIndex = cartItems.findIndex(item => item.productId === this.singleproductId);
+    const existingItemIndex = this.cartItems.findIndex((item:any) => item.productId === this.singleproductId);
 
     if (existingItemIndex !== -1) {
       // If the product already exists, increment the quantity
-      cartItems[existingItemIndex].quantity++;
+      this.cartItems[existingItemIndex].quantity++;
     } else {
       // If the product doesn't exist, add it to the cart with quantity 1
-      cartItems.push({
+      this.cartItems.push({
         productId: this.singleproductId,
         name: this.singleResult.title,
         thumbnail: this.singleResult.thumbnail,
@@ -83,13 +86,14 @@ export class SingleproductComponent implements OnInit {
     }
 
     // Store the updated cart items back in localStorage
-    localStorage.setItem(cartKey, JSON.stringify(cartItems));
+    localStorage.setItem(cartKey, JSON.stringify(this.cartItems));
 
     alert('Product added to cart successfully!');
-    window.location.reload();
+    // window.location.reload();\
+ 
+this.cartService.updateCartItems(this.cartItems);
   }
-
-  backClicked() {
+   backClicked() {
     this.location.back();
   }
 
