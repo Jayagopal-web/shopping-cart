@@ -49,6 +49,16 @@ export class LandingPageComponent implements OnInit {
   }
 
   getFirstProductForCategory(category: string): Product | null {
-    return this.productList[category] ? this.productList[category][0] : null;
+    if (this.productList[category] && this.productList[category].length > 0) {
+      let lowestPriceProduct = this.productList[category][0];
+      for (let product of this.productList[category]) {
+        if (product.price < lowestPriceProduct.price) {
+          lowestPriceProduct = product;
+        }
+      }
+      return lowestPriceProduct;
+    }
+    return null;
   }
+  
 }

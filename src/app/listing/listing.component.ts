@@ -120,7 +120,7 @@ export class ListingComponent implements OnInit, OnDestroy {
     });
   }
 
-  fetchProducts(category: string | Event): void {
+  fetchProducts(category: string): void {
     this.priceRange = "Default";
     this.products = [];
     this.sharedService.updateSearchTerm('');
@@ -128,12 +128,14 @@ export class ListingComponent implements OnInit, OnDestroy {
       this.httpClient.get<any>(`https://dummyjson.com/products/category/${category}`).subscribe(result => {
         this.products = result.products;
         this.beforeSearch = [...this.products];
+        sessionStorage.setItem('category',category);
       });
     } else {
       this.httpClient.get<any>('https://dummyjson.com/products?limit=0').subscribe(result => {
         this.products = result.products;
         this.selectedCategory = category;
         this.beforeSearch = [...this.products];
+        sessionStorage.setItem('category',category);
       });
     }
   }

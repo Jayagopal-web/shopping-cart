@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CartService } from '../services/cart.service';
 import { Location } from '@angular/common';
@@ -26,6 +26,7 @@ export class SingleproductComponent implements OnInit {
   cartItems: any = [];
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private httpClient: HttpClient,private cartService: CartService,
     private location: Location,
@@ -45,7 +46,6 @@ export class SingleproductComponent implements OnInit {
     this.httpClient.get<any>(`https://dummyjson.com/products/${singleproductId}`).subscribe(
       (single) => {
         this.singleResult = single;
-        console.log(single);
         this.mainImage = single.thumbnail;
       },
       (error) => {
@@ -66,18 +66,13 @@ export class SingleproductComponent implements OnInit {
 
     const cartKey = 'cart_' + this.userId;
 
-    // Retrieve the existing cart items from localStorage
+ 
      this.cartItems = JSON.parse(localStorage.getItem(cartKey) || '[]');
-    console.log(this.cartItems);
-
-    // Check if the product already exists in the cart
     const existingItemIndex = this.cartItems.findIndex((item:any) => item.productId === this.singleproductId);
 
     if (existingItemIndex !== -1) {
-      // If the product already exists, increment the quantity
       this.cartItems[existingItemIndex].quantity++;
     } else {
-      // If the product doesn't exist, add it to the cart with quantity 1
       this.cartItems.push({
         productId: this.singleproductId,
         name: this.singleResult.title,
@@ -87,16 +82,16 @@ export class SingleproductComponent implements OnInit {
       });
     }
 
-    // Store the updated cart items back in localStorage
     localStorage.setItem(cartKey, JSON.stringify(this.cartItems));
 
     alert('Product added to cart successfully!');
-    // window.location.reload();\
  
 this.cartService.updateCartItems(this.cartItems);
   }
    backClicked() {
-    this.location.back();
+    // this.location.back();
+    const cat = sessionStorage.getItem('category');
+    this.router.navigate(['/listing', cat]);
   }
 
   toggleAdditionalInfo() {
