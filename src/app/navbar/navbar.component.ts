@@ -68,6 +68,7 @@ export class NavbarComponent implements OnInit {
       this.getCartItems();
     } else {
       console.error('No user ID found in session storage');
+      this.cartItemCount=0;
     }
 
     this.sharedService.currentSearchTerm.subscribe(term => {
